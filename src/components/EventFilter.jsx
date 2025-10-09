@@ -1,4 +1,3 @@
-// src/components/EventFilter.js
 import React from "react";
 import "../componentStyle/EventFilter.css";
 

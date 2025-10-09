@@ -42,7 +42,8 @@
     "date": "2025-11-05",
     "priceType": "Paid",
     "category": "Culture",
-    "location": "Art Center"
+    "location": "Art Center",
+    "price" :5
   },
   {
     "id": 6,
@@ -52,5 +53,14 @@
     "priceType": "Free",
     "category": "Sports",
     "location": "Central Park"
+  },
+   {
+    "id": 7,
+    "title": "Coffee Tasting",
+    "description": "Taste different local brews and learn about coffee making.",
+    "date": "2025-10-20",
+    "category": "Food & Drink",
+    "priceType": "Paid",
+    "price": 5
   }
 ]

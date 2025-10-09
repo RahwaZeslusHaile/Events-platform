@@ -39,7 +39,6 @@
   background-color: #005bb5;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .event-card {
     width: 90%;

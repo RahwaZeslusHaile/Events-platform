@@ -6,7 +6,7 @@ import EventSearch from "./EventSearch";
 import eventsData from "../data/event.json";
 import "../componentStyle/EventList.css";
 
-function EventList() {
+function EventList({events,addEvent}) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +32,7 @@ function EventList() {
       <div className="event-list">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
-            <EventCard key={event.id} {...event} />
+            <EventCard key={event.id} {...event} onSignUp={()=>addEvent(event)} />
           ))
         ) : (
           <p>No events found.</p>
