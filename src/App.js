@@ -7,10 +7,12 @@ import MyEventsPage from "./pages/MyEvents";
 import CreateEventPage from "./pages/CreateEventPage";
 import eventsData from "./data/event.json";
 import EventDetailsPage from "./pages/EvenDetails";
+import LoginPage from "./pages/LoginPage"; // fixed
 
 function App() {
   const [allEvents, setAllEvents] = useState(eventsData);
   const [signedUpEvents, setSignedUpEvents] = useState([]);
+  const [user, setUser] = useState(null);
 
   const addNewEvent = (event) => {
     setAllEvents([...allEvents, event]);
@@ -28,7 +30,7 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      <Header user={user} setUser={setUser}/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -45,18 +47,27 @@ function App() {
           }
         />
         <Route
-              path="/events/:id"
-              element={
-                <EventDetailsPage 
-                events={allEvents} 
-                addEvent={addEvent} 
-              />}
+          path="/events/:id"
+          element={
+            <EventDetailsPage 
+              events={allEvents} 
+              addEvent={user ? addEvent : null} 
             />
+          }
+        />
         <Route
           path="/create"
-          element={<CreateEventPage addNewEvent={addNewEvent} />}
+          element={
+            user?.role === "staff" ? (
+              <CreateEventPage addNewEvent={addNewEvent} />
+            ) : (
+              <div style={{ padding: "20px", textAlign: "center" }}>
+                Access Denied: Staff Only
+              </div>
+            )
+          }
         />
-        <Route path="/login" element={<div>Login Page</div>} />
+        <Route path="/login" element={<LoginPage setUser={setUser} />} />
       </Routes>
     </Router>
   );

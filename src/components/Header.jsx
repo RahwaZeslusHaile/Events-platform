@@ -1,9 +1,15 @@
-
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../componentStyle/Header.css";
 
-function Header() {
+function Header({ user, setUser }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUser(null);
+    navigate("/login"); // redirect to login after logout
+  };
+
   return (
     <header className="header">
       <div className="logo">Events Platform</div>
@@ -12,7 +18,20 @@ function Header() {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/events">Events</Link></li>
           <li><Link to="/my-events">My Calendar</Link></li>
-          <li><Link to="/login">Login</Link></li>
+          {user ? (
+            <>
+              {user.role === "staff" && (
+                <li><Link to="/create">Create Event</Link></li>
+              )}
+              <li>
+                <button onClick={handleLogout} className="logout-button">
+                  Logout ({user.role})
+                </button>
+              </li>
+            </>
+          ) : (
+            <li><Link to="/login">Login</Link></li>
+          )}
         </ul>
       </nav>
     </header>
