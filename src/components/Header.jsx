@@ -7,7 +7,7 @@ function Header({ user, setUser }) {
 
   const handleLogout = () => {
     setUser(null);
-    navigate("/login"); // redirect to login after logout
+    navigate("/login"); 
   };
 
   return (

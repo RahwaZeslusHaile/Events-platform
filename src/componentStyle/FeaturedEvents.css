@@ -1,19 +1,20 @@
-
 .featured-events {
-  padding: 40px 20px;
-  background-color: #fff;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f5f7fa, #e2e6ec);
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+.featured-grid{
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .featured-events h2 {
-  text-align: center;
-  margin-bottom: 30px;
   font-size: 2rem;
+  font-weight: 700;
   color: #222;
-}
-
-.event-cards {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  margin-bottom: 30px;
 }

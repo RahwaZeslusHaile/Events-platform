@@ -1,16 +1,25 @@
-
 import React from "react";
-import EventCard from "./EventCard";
+import EventCard from "./EventCard.jsx";
 import "../componentStyle/FeaturedEvents.css";
 
-function FeaturedEvents() {
+function FeaturedEvents({ events, addEvent }) {
+  if (!events || events.length === 0) {
+    return <p>No featured events available.</p>;
+  }
+
+  const featuredEvents = events.slice(0, 3);
+
   return (
     <section className="featured-events">
       <h2>Featured Events</h2>
-      <div className="event-cards">
-        <EventCard title="Community Meetup" date="Oct 15" />
-        <EventCard title="Charity Run" date="Oct 20" />
-        <EventCard title="Book Club" date="Oct 25" />
+      <div className="featured-events-list">
+        {featuredEvents.map((event) => (
+          <EventCard
+            key={event.id}
+            {...event}
+            onSignUp={() => addEvent(event)}
+          />
+        ))}
       </div>
     </section>
   );

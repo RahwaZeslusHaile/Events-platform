@@ -1,22 +1,26 @@
-
 import React, { useState } from "react";
-import EventCard from "./EventCard";
-import EventFilter from "./EventFilter";
-import EventSearch from "./EventSearch";
-import eventsData from "../data/event.json";
+import EventCard from "./EventCard.jsx";
+import EventFilter from "./EventFilter.jsx";
+import EventSearch from "./EventSearch.jsx";
 import "../componentStyle/EventList.css";
 
-function EventList({events,addEvent}) {
+function EventList({ events, addEvent }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredEvents = eventsData.filter((event) => {
-    return (
-      (selectedCategory === "" || event.category === selectedCategory) &&
-      (selectedPrice === "" || event.priceType === selectedPrice) &&
-      (searchTerm === "" || event.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+  const filteredEvents = events.filter((event) => {
+    const matchesCategory =
+      selectedCategory === "" || event.category === selectedCategory;
+
+    const matchesPrice =
+      selectedPrice === "" || event.priceType === selectedPrice;
+
+    const matchesSearch =
+      searchTerm === "" ||
+      event.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesPrice && matchesSearch;
   });
 
   return (
@@ -32,7 +36,7 @@ function EventList({events,addEvent}) {
       <div className="event-list">
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
-            <EventCard key={event.id} {...event} onSignUp={()=>addEvent(event)} />
+            <EventCard key={event.id} {...event} onSignUp={() => addEvent(event)} />
           ))
         ) : (
           <p>No events found.</p>

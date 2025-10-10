@@ -19,10 +19,11 @@ button {
 
 /* Main content spacing */
 main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  min-height: 80vh;
+  padding: 20px;
+  background: #fafafa;
 }
+
 
 /* Footer styling */
 footer {
