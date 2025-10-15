@@ -8,10 +8,13 @@ function EventFilter({ selectedCategory, setSelectedCategory, selectedPrice, set
         Category:
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
           <option value="">All</option>
-          <option value="Sports">Sports</option>
+          <option value="Sports">Charity</option>
           <option value="Education">Education</option>
           <option value="Community">Community</option>
           <option value="Culture">Culture</option>
+          <option value="Arts & Theatre">Arts & Theatre</option>
+          <option value="Music">Music</option>
+
         </select>
       </label>
 

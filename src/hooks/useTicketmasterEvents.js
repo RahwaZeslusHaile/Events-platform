@@ -9,22 +9,11 @@ function useTicketmasterEvents() {
     async function fetchEvents() {
       try {
         const res = await fetch("http://localhost:5000/api/events");
+        if (!res.ok) throw new Error("Failed to fetch events");
         const data = await res.json();
 
-        const apiEvents = data._embedded?.events || [];
-
-        const mapped = apiEvents.map((event) => ({
-          id: event.id,
-          title: event.name,
-          description: event.info || event.pleaseNote || "No description available",
-          date: event.dates?.start?.localDate || "Unknown date",
-          location: event._embedded?.venues?.[0]?.name || "Unknown location",
-          category: event.classifications?.[0]?.segment?.name || "Uncategorized",
-          priceType: event.priceRanges ? "Paid" : "Free",
-          image: event.images?.[0]?.url || null,
-        }));
-
-        setEvents(mapped);
+       
+        setEvents(data);
       } catch (err) {
         console.error("Error fetching events:", err);
         setError(err.message);

@@ -1,20 +1,37 @@
-.featured-events {
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #f5f7fa, #e2e6ec);
-  text-align: center;
-  border-top: 1px solid #ddd;
-}
 
-.featured-grid{
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
+.featured-events {
+  padding: 30px 20px;
+  background-color: #f9f9f9;
 }
 
 .featured-events h2 {
+  text-align: center;
+  margin-bottom: 25px;
   font-size: 2rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 30px;
+  color: #333;
+}
+
+.featured-events-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 25px; /* space between cards */
+  justify-items: center;
+}
+
+@media (max-width: 992px) {
+  .featured-events-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .featured-events-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featured-events-list .event-card {
+  width: 100%;
+  max-width: 350px; /* wider than normal cards */
+  padding: 20px;
 }

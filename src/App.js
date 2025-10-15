@@ -8,9 +8,11 @@ import CreateEventPage from "./pages/CreateEventPage.js";
 import EventDetailsPage from "./pages/EventDetails.js";
 import LoginPage from "./pages/LoginPage.js";
 import useTicketmasterEvents from "./hooks/useTicketmasterEvents.js";
+import Footer from "./components/Footer.jsx";
 
 function App() {
-  const { events, loading, error } = useTicketmasterEvents();
+  const { events: ticketmasterEvents, loading, error } = useTicketmasterEvents();
+  const [localEvents, setLocalEvents] = useState([]); 
   const [signedUpEvents, setSignedUpEvents] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -25,8 +27,10 @@ function App() {
   };
 
   const addNewEvent = (event) => {
-   
+    setLocalEvents([...localEvents, { ...event, id: Date.now().toString() }]);
   };
+
+  const allEvents = [...localEvents, ...ticketmasterEvents];
 
   return (
     <Router>
@@ -36,37 +40,24 @@ function App() {
           <Route
             path="/"
             element={
-              <HomePage
-                events={events}
-                addEvent={addEvent}
-                loading={loading}
-                error={error}
-              />
+              <HomePage events={allEvents} addEvent={addEvent} loading={loading} error={error} />
             }
           />
           <Route
             path="/events"
             element={
-              <EventsPage
-                events={events}
-                addEvent={addEvent}
-                loading={loading}
-                error={error}
-              />
+              <EventsPage events={allEvents} addEvent={addEvent} loading={loading} error={error} />
             }
           />
           <Route
             path="/my-events"
             element={
-              <MyEventsPage
-                signedUpEvents={signedUpEvents}
-                removeEvent={removeEvent}
-              />
+              <MyEventsPage signedUpEvents={signedUpEvents} removeEvent={removeEvent} />
             }
           />
           <Route
             path="/events/:id"
-            element={<EventDetailsPage events={events} addEvent={addEvent} />}
+            element={<EventDetailsPage events={allEvents} addEvent={addEvent} />}
           />
           <Route
             path="/create"
@@ -75,6 +66,7 @@ function App() {
           <Route path="/login" element={<LoginPage setUser={setUser} />} />
         </Routes>
       </main>
+      <Footer />
     </Router>
   );
 }

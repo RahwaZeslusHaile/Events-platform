@@ -23,7 +23,6 @@ function CreateEventPage({ addNewEvent }) {
       price: priceType === "Paid" ? price : 0
     };
     addNewEvent(newEvent);
-    // Reset form
     setTitle("");
     setDescription("");
     setDate("");
@@ -40,7 +39,12 @@ function CreateEventPage({ addNewEvent }) {
       <form onSubmit={handleSubmit}>
         <label>
           Title:
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+<input
+  type="datetime-local"
+  value={date}
+  onChange={(e) => setDate(e.target.value)}
+  required
+/>
         </label>
         <br />
         <label>
