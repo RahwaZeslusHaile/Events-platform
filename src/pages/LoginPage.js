@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../componentStyle/LoginPage.css";
 
 function LoginPage({ setUser }) {
   const [email, setEmail] = useState("");
@@ -51,7 +52,7 @@ function LoginPage({ setUser }) {
           autoComplete="current-password"
         />
       </div>
-      <button type="submit">Login</button>
+      <button className="login-container button" type="submit">Login</button>
     </form>
     {error && <p>{error}</p>}
   </div>
