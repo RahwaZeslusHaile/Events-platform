@@ -30,12 +30,49 @@ A community events app (MVP: create, sign up, add to calendar).
        ```bash
        TICKETMASTER_API_KEY=your_api_key_here
       ```
-5. **Start the backend server**
+
+
+5. **### 💳 Stripe Integration**
+
+      This project uses Stripe Checkout to handle event payments.  
+      The backend (server.js) creates a checkout session using the secret key.  
+      The frontend (EventCard.jsx) loads Stripe using the public key and redirects users to Stripe’s payment page.
+
+      Environment variables:
+      - `VITE_STRIPE_PUBLIC_KEY` in `/client/.env`
+      - `STRIPE_SECRET_KEY` in `/server/.env`
+
+      Use Stripe test card `4242 4242 4242 4242` to simulate a successful payment.
+
+
+6. ### 🎟️ Ticketmaster API Integration
+
+   This project uses the **Ticketmaster Discovery API** to fetch live events happening in Manchester.
+
+   #### 🔗 API Endpoint
+   The backend (`server.js`) calls: https://app.ticketmaster.com/discovery/v2/events?apikey=YOUR_TICKETMASTER_API_KEY&city=MANCHESTER
+
+   The server processes the raw data and simplifies it before sending it to the frontend at:GET /api/events
+ 
+   you need a `.env` file in your server folder with:TICKETMASTER_API_KEY=your_real_ticketmaster_key
+
+
+   #### 💡 How It Works
+   - The backend fetches events from Ticketmaster.
+   - It cleans and simplifies the data (title, date, venue, image, price type, etc.).
+   - The frontend (`useTicketmasterEvents.js`) fetches from `http://localhost:5000/api/events` and displays the events.
+   - If Ticketmaster fails, mock events are added for testing.
+
+   #### 🧪 Testing Tip
+   If you don’t have a real Ticketmaster key, you can still run the project using the **mock events** that are included in the backend.
+
+
+7. **Start the backend server**
 
    ```bash
    npm run server
    ```
-5. **Start the frontend**
+8. **Start the frontend**
 
    ```bash
    npm start
@@ -96,31 +133,25 @@ events-platform/
 
 ## 🗓️ Development Roadmap
 
-### two weeks
-
 * [x] Setup project and routing
 * [x] Build header, footer, and event list
 * [x] Implement event filters and search
 * [x] Create “My Events” page
-
-### two weeks
-
-* [ ] Add login and role-based access
-* [ ] Implement Create Event form (Staff only)
-* [ ] Integrate Google Calendar API
-* [ ] Deploy final version and update documentation
-* [ ] Fetch real events from Ticketmaster API
-* [ ] Add dynamic price handling (Free / Paid / Pay-as-you-feel)
-* [ ] Implement search and filters
-* [ ] Role-based login (staff vs member)
-* [ ] Responsive design
+* [x] Add login and role-based access
+* [x] Implement Create Event form (Staff only)
+* [x] Integrate Google Calendar API
+* [x] Deploy final version and update documentation
+* [x] Fetch real events from Ticketmaster API
+* [x] Implement search and filters
+* [x] Role-based login (staff vs member)
+* [x] Responsive design
+* [x] Payment system (Stripe) for paid events
 
 
 ---
 
 ## 🌟 Future Features
 
-* Payment system (Stripe) for paid events
 * Persistent login (using localStorage or backend authentication)
 
 ---
