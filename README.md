@@ -9,7 +9,8 @@ A community events app (MVP: create, sign up, add to calendar).
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/RahwaZeslusHaile/Events-platform
+   git clone front-end :https://github.com/RahwaZeslusHaile/Events-platform
+             back-end :https://github.com/RahwaZeslusHaile/BE-event-platform
    ```
 
 2. **Navigate into the project folder**

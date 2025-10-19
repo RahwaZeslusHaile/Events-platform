@@ -3,7 +3,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import GoogleCalendarButton from "./GoogleCalendarButton.jsx";
 import "../componentStyle/EventCard.css";
 
-// ✅ Use your Stripe *public* key — from client/.env
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 export default function EventCard({
@@ -22,7 +21,7 @@ export default function EventCard({
 
   const handlePayment = async () => {
     try {
-      const stripe = await stripePromise;
+       await stripePromise;
 
       const response = await fetch("http://localhost:5000/create-checkout-session", {
         method: "POST",
@@ -33,7 +32,7 @@ export default function EventCard({
       const session = await response.json();
 
       if (session.url) {
-        window.location.href = session.url; // Redirect to Stripe Checkout
+        window.location.href = session.url; 
       } else {
         alert("Unable to start checkout session");
       }
