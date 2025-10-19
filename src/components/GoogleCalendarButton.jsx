@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { gapi } from "gapi-script";
 import "../componentStyle/EventCard.css";
 
-const CLIENT_ID = "336567082439-96gj05qhchsicls1vl88of22abess319.apps.googleusercontent.com";
-const API_KEY = "AQ.Ab8RN6KUsjnTDAoPO0XdlwtXKzvh76AzBqkF2Z4DskfBUKMJ3w";
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "336567082439-96gj05qhchsicls1vl88of22abess319.apps.googleusercontent.com";
+const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY || "AQ.Ab8RN6KUsjnTDAoPO0XdlwtXKzvh76AzBqkF2Z4DskfBUKMJ3w";
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 export default function GoogleCalendarButton({ event }) {

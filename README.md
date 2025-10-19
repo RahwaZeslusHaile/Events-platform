@@ -78,6 +78,23 @@ A community events app (MVP: create, sign up, add to calendar).
    ```bash
    npm start
    ```
+
+### Google sign-in and COOP header (Netlify)
+
+When using Google sign-in via the gapi popup on Netlify you may see errors like:
+
+```
+Cross-Origin-Opener-Policy policy would block the window.closed call
+```
+
+This happens because modern browsers' COOP/COEP policies can block cross-origin popups from closing properly. To fix this on Netlify, add a `_headers` file at the project root or inside the `client` folder (which will be included in the build) with this content:
+
+```
+/*
+   Cross-Origin-Opener-Policy: same-origin-allow-popups
+```
+
+Netlify will serve that header for all pages and allow the Google popup flow to work.
 ---
 
 ## 🌐 Live Demo
