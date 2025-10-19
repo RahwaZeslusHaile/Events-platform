@@ -24,8 +24,8 @@
 }
 
 .cancel-button {
-  background-color: #ff4d4d;
-  color: white;
+  background-color: #d93025; /* deeper red for better contrast */
+  color: #ffffff; /* force white text */
   border: none;
   border-radius: 5px;
   padding: 8px 12px;
@@ -33,5 +33,5 @@
 }
 
 .cancel-button:hover {
-  background-color: #e60000;
+  background-color: #b1271b; /* slightly darker on hover */
 }

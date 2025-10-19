@@ -7,6 +7,7 @@ import MyEventsPage from "./pages/MyEvents.js";
 import CreateEventPage from "./pages/CreateEventPage.js";
 import EventDetailsPage from "./pages/EventDetails.js";
 import LoginPage from "./pages/LoginPage.js";
+import SignupPage from "./pages/SignupPage.js";
 import useTicketmasterEvents from "./hooks/useTicketmasterEvents.js";
 import Footer from "./components/Footer.jsx";
 
@@ -15,6 +16,25 @@ function App() {
   const [localEvents, setLocalEvents] = useState([]); 
   const [signedUpEvents, setSignedUpEvents] = useState([]);
   const [user, setUser] = useState(null);
+
+  // Try to load user from stored token
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    (async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Not authenticated");
+        const data = await res.json();
+        setUser(data.user);
+      } catch (err) {
+        console.log("Auto login failed", err.message);
+        localStorage.removeItem("token");
+      }
+    })();
+  }, []);
 
   const addEvent = (event) => {
     if (!signedUpEvents.find((e) => e.id === event.id)) {
@@ -34,7 +54,7 @@ function App() {
 
   return (
     <Router>
-      <Header user={user} setUser={setUser} />
+  <Header user={user} setUser={setUser} />
       <main>
         <Routes>
           <Route
@@ -64,6 +84,7 @@ function App() {
             element={<CreateEventPage addNewEvent={addNewEvent} />}
           />
           <Route path="/login" element={<LoginPage setUser={setUser} />} />
+          <Route path="/signup" element={<SignupPage setUser={setUser} />} />
         </Routes>
       </main>
       <Footer />

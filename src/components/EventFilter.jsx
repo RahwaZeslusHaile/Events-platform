@@ -24,6 +24,7 @@ function EventFilter({ selectedCategory, setSelectedCategory, selectedPrice, set
           <option value="">All</option>
           <option value="Free">Free</option>
           <option value="Paid">Paid</option>
+          <option value="Pay as you feel">Pay as you feel</option>
         </select>
       </label>
     </div>

@@ -7,6 +7,7 @@ function Header({ user, setUser }) {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem("token");
     navigate("/login"); 
   };
 

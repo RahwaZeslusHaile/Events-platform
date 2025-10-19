@@ -34,8 +34,9 @@ footer {
   margin-top: 40px;
 }
 
+/* Use a brighter, more saturated green for better contrast on dark footer */
 footer a {
-  color: #1abc9c;
+  color: #2ee6b6; /* brighter mint green (higher contrast on #2c3e50) */
   margin: 0 10px;
 }
 

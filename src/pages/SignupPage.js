@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../componentStyle/LoginPage.css";
 
-function LoginPage({ setUser }) {
+function SignupPage({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("member");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch("http://localhost:5000/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, role }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
+      if (!res.ok) throw new Error(data.error || "Signup failed");
 
       localStorage.setItem("token", data.token);
       setUser(data.user);
@@ -30,7 +31,7 @@ function LoginPage({ setUser }) {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>Sign up</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
@@ -39,7 +40,6 @@ function LoginPage({ setUser }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            autoComplete="current-email"
           />
         </div>
         <div>
@@ -49,17 +49,20 @@ function LoginPage({ setUser }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            autoComplete="current-password"
           />
         </div>
-        <button className="login-container button" type="submit">Login</button>
+        <div>
+          <label>Role:</label>
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="member">Member</option>
+            <option value="staff">Staff</option>
+          </select>
+        </div>
+        <button type="submit">Create account</button>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </p>
       {error && <p>{error}</p>}
     </div>
   );
 }
 
-export default LoginPage;
+export default SignupPage;
