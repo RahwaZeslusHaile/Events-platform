@@ -34,7 +34,7 @@
 
 .login-container button {
   background-color: #0078d7;
-  color: #ffffff; /* force white text for sufficient contrast */
+  color: #ffffff; 
   font-weight: 600;
   border: none;
   border-radius: 8px;
@@ -53,5 +53,5 @@
 
 .login-container p {
   margin-top: 10px;
-  color: #cc0000; /* slightly darker red for better contrast */
+  color: #cc0000; 
 }

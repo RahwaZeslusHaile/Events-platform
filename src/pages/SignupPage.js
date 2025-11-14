@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../componentStyle/LoginPage.css";
+import { useNotification } from "../components/NotificationProvider.jsx";
 
 function SignupPage({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("member");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const notify = useNotification();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/signup", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role }),
@@ -22,10 +23,10 @@ function SignupPage({ setUser }) {
 
       localStorage.setItem("token", data.token);
       setUser(data.user);
-      setError("");
+      notify && notify("Account created", "success");
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      notify && notify(err.message, "error");
     }
   };
 
@@ -60,7 +61,7 @@ function SignupPage({ setUser }) {
         </div>
         <button type="submit">Create account</button>
       </form>
-      {error && <p>{error}</p>}
+      {/* errors are shown via global notifications */}
     </div>
   );
 }

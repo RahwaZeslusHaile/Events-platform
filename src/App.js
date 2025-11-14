@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNotification } from "./components/NotificationProvider.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import HomePage from "./pages/Home.js";
@@ -16,14 +17,16 @@ function App() {
   const [localEvents, setLocalEvents] = useState([]); 
   const [signedUpEvents, setSignedUpEvents] = useState([]);
   const [user, setUser] = useState(null);
+  const notify = useNotification();
 
-  // Try to load user from stored token
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
     (async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/me", {
+        const res = await fetch(`${API_BASE}/api/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Not authenticated");
@@ -34,11 +37,16 @@ function App() {
         localStorage.removeItem("token");
       }
     })();
-  }, []);
+  }, [API_BASE]);
 
   const addEvent = (event) => {
     if (!signedUpEvents.find((e) => e.id === event.id)) {
       setSignedUpEvents([...signedUpEvents, event]);
+      if (event.priceType === "Paid" || event.priceType === "Pay as you feel") {
+        notify(`You're registered for "${event.title}".`, "success");
+      } else {
+        notify(`Your "${event.title}" event is now in your calendar.`, "success");
+      }
     }
   };
 
@@ -55,6 +63,7 @@ function App() {
   return (
     <Router>
   <Header user={user} setUser={setUser} />
+      
       <main>
         <Routes>
           <Route

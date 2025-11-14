@@ -1,6 +1,7 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import GoogleCalendarButton from "./GoogleCalendarButton.jsx";
+import { useNotification } from "./NotificationProvider.jsx";
 import "../componentStyle/EventCard.css";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
@@ -19,11 +20,15 @@ export default function EventCard({
   const eventDateTime = new Date(date + "T14:00:00").toISOString();
   const eventForCalendar = { id, title, description, date: eventDateTime };
 
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
+  const notify = useNotification();
+
   const handlePayment = async () => {
     try {
        await stripePromise;
 
-      const response = await fetch("http://localhost:5000/create-checkout-session", {
+      const response = await fetch(`${API_BASE}/create-checkout-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, price }),
@@ -34,11 +39,11 @@ export default function EventCard({
       if (session.url) {
         window.location.href = session.url; 
       } else {
-        alert("Unable to start checkout session");
+        notify && notify(`Unable to start checkout session: ${session.error || "unknown error"}`, "error");
       }
     } catch (error) {
       console.error("Payment error:", error);
-      alert("Something went wrong while processing payment.");
+      notify && notify(`Payment error: ${error.message || "Something went wrong"}`, "error");
     }
   };
 

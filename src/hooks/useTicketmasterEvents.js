@@ -8,7 +8,8 @@ function useTicketmasterEvents() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const res = await fetch("https://be-event-platform.onrender.com/api/events");
+        const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+        const res = await fetch(`${API_BASE}/api/events`);
         if (!res.ok) throw new Error("Failed to fetch events");
         const data = await res.json();
 

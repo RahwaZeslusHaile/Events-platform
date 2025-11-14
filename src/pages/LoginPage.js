@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../componentStyle/LoginPage.css";
+import { useNotification } from "../components/NotificationProvider.jsx";
 
 function LoginPage({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const notify = useNotification();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -21,10 +22,9 @@ function LoginPage({ setUser }) {
 
       localStorage.setItem("token", data.token);
       setUser(data.user);
-      setError("");
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      notify && notify(err.message, "error");
     }
   };
 
@@ -52,12 +52,12 @@ function LoginPage({ setUser }) {
             autoComplete="current-password"
           />
         </div>
-        <button className="login-container button" type="submit">Login</button>
+  <button type="submit">Login</button>
       </form>
       <p>
         Don't have an account? <Link to="/signup">Sign up</Link>
       </p>
-      {error && <p>{error}</p>}
+      {/* errors are shown via global notifications */}
     </div>
   );
 }

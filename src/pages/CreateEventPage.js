@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../componentStyle/CreateEventPage.css";
+import { useNotification } from "../components/NotificationProvider.jsx";
 
 function CreateEventPage({ addNewEvent }) {
   const [title, setTitle] = useState("");
@@ -9,6 +10,7 @@ function CreateEventPage({ addNewEvent }) {
   const [category, setCategory] = useState("");
   const [priceType, setPriceType] = useState("Free");
   const [price, setPrice] = useState("");
+  const notify = useNotification();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ function CreateEventPage({ addNewEvent }) {
     setCategory("");
     setPriceType("Free");
     setPrice("");
-    alert("Event created!");
+    notify && notify("Event created!", "success");
   };
 
   return (
